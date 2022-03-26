@@ -1,0 +1,18 @@
+:root {
+    --black: #000000;
+    --white: #ffffff;
+  }
+* {
+  top: 0;
+  left: 0;
+  padding: 0;
+  margin: 0;
+}
+.app {
+  background-color: var(--white);
+}
+
+.dark-mode {
+    background-color: var(--black);
+    color: var(--white);
+}

@@ -1,9 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 
-const Header = () => {
-  const [darkMode, setDarkMode] = useState(false);
-
-  const handleClick = () => setDarkMode(!darkMode);
+const Header = ({ handleClick, darkMode }) => {
   return (
     <div className="header">
       <h1>React Hooks 🪝</h1>
