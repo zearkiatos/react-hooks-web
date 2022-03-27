@@ -15,7 +15,7 @@ const Characters = () => {
   };
 
   const renderCharacters = characters.map((character) => (
-    <CharacterCard {...character} />
+    <CharacterCard key={character.id} {...character} />
   ));
 
   useEffect(() => {

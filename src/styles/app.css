@@ -1,7 +1,7 @@
 :root {
-    --black: #000000;
-    --white: #ffffff;
-  }
+  --black: #000000;
+  --white: #ffffff;
+}
 * {
   top: 0;
   left: 0;
@@ -13,6 +13,11 @@
 }
 
 .dark-mode {
-    background-color: var(--black);
-    color: var(--white);
+  background-color: var(--black);
+  color: var(--white);
+}
+
+.light-mode {
+  background-color: var(--white);
+  color: var(--black);
 }

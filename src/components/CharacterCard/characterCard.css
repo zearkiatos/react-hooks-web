@@ -26,7 +26,7 @@ figure.image-container img {
   filter: none;
 }
 
-caption.details {
+figcaption.details {
   display: block;
   position: relative;
   background: var(--black);
@@ -39,11 +39,31 @@ caption.details {
   transition: ease-in-out 1s;
 }
 
-caption.details p {
+figcaption.details p {
   color: var(--white);
   text-align: start;
 }
 
 .card:hover .details {
   transform: translate(0, -105px);
+}
+
+.card.dark-mode {
+  border-color: var(--white);
+}
+
+figcaption.details.dark-mode {
+  background: var(--white);
+}
+
+figcaption.details.dark-mode p {
+  color: var(--black);
+}
+
+figure.image-container.dark-mode img {
+  filter: brightness(0.7) grayscale(1);
+}
+
+.card:hover figure.image-container.dark-mode img {
+  filter: none;
 }

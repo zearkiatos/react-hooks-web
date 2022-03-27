@@ -2,9 +2,15 @@
 
 This is a reactjs ⚛️ web application to practice and improvement skills about the react hooks 🪝
 
+![Github](https://github.com/zearkiatos/react-hooks-web/actions/workflows/action.yml/badge.svg)
+
 # Make with
 [![ReactJS](https://img.shields.io/badge/react-61dafb?style=for-the-badge&logo=react&logoColor=white&labelColor=000000)]()
 [![JavaScript](https://img.shields.io/badge/javascript-ead547?style=for-the-badge&logo=javascript&logoColor=white&labelColor=000000)]()
+
+# Project link
+
+Github: [https://zearkiatos.github.io/react-hooks-web//](https://zearkiatos.github.io/react-hooks-web/)
 
 # Getting Started with Create React App
 
