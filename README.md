@@ -3,6 +3,7 @@
 This is a reactjs ⚛️ web application to practice and improvement skills about the react hooks 🪝
 
 ![Github](https://github.com/zearkiatos/react-hooks-web/actions/workflows/action.yml/badge.svg)
+![GitlabCI](https://gitlab.com/caprilespe/react-hooks-web/badges/develop/pipeline.svg)
 
 # Make with
 [![ReactJS](https://img.shields.io/badge/react-61dafb?style=for-the-badge&logo=react&logoColor=white&labelColor=000000)]()
@@ -10,7 +11,9 @@ This is a reactjs ⚛️ web application to practice and improvement skills abou
 
 # Project link
 
-Github: [https://zearkiatos.github.io/react-hooks-web//](https://zearkiatos.github.io/react-hooks-web/)
+Github: [https://zearkiatos.github.io/react-hooks-web/](https://zearkiatos.github.io/react-hooks-web/)
+
+Gitlab 🦊: [https://caprilespe.gitlab.io/react-hooks-web/](https://caprilespe.gitlab.io/react-hooks-web/)
 
 # Getting Started with Create React App
 

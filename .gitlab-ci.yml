@@ -56,7 +56,7 @@ build-app:
     - echo "Deploy a review app 🛠"
     - touch .env
     - echo "REACT_APP_ENVIRONMENT=${REACT_APP_ENVIRONMENT}" > .env
-        - echo "REACT_APP_RICKANDMORTY_API_BASE_URL=${REACT_APP_RICKANDMORTY_API_BASE_URL}" >> .env
+    - echo "REACT_APP_RICKANDMORTY_API_BASE_URL=${REACT_APP_RICKANDMORTY_API_BASE_URL}" >> .env
     - npm run build:ci
   artifacts:
     expire_in: 1hr

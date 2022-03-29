@@ -1,0 +1,5 @@
+const FAVORITE_TYPES = {
+    ADD_TO_FAVORITE: 'ADD_TO_FAVORITE'
+}
+
+export default FAVORITE_TYPES;
