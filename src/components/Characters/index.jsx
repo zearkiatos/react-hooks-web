@@ -1,7 +1,14 @@
-import React, { useState, useEffect, useReducer } from "react";
+import React, {
+  Fragment,
+  useState,
+  useEffect,
+  useReducer,
+  useMemo
+} from "react";
 import config from "../../config";
 import CharacterCard from "../CharacterCard";
-import { FAVORITE_TYPES } from '../../types';
+import Search from "../Search";
+import { FAVORITE_TYPES } from "../../types";
 import "./characters.css";
 
 const INITIAL_STATE = {
@@ -21,13 +28,25 @@ const favoriteReducer = (state, action) => {
 
 const Characters = () => {
   const [characters, setCharacters] = useState([]);
-  const [ state, dispatch ] = useReducer(favoriteReducer, INITIAL_STATE);
-  const handleClick = favorite => {
+  const [state, dispatch] = useReducer(favoriteReducer, INITIAL_STATE);
+  const [search, setSearch] = useState("");
+  const handleClick = (favorite) => {
     dispatch({
       type: FAVORITE_TYPES.ADD_TO_FAVORITE,
       payload: favorite
     });
   };
+
+  const handleSearch = ({ target: { value } }) => setSearch(value);
+
+  const filteredCharacters = characters.filter((character) => {
+    return character.name.toLowerCase().includes(search.toLowerCase());
+  });
+
+  const memoFilterdCharacters = useMemo(
+    () => filteredCharacters,
+    [characters, search]
+  );
   const getCharacters = async () => {
     const response = await fetch(
       `${config.RICKANDMORTY_API_BASE_URL}/character/`
@@ -35,15 +54,17 @@ const Characters = () => {
     const data = response.json();
     return data;
   };
-  
-  const renderFavorites = state.favorites && state.favorites.map(({id, name}) => (
-    <li key={id}>
-      {name}
-    </li>
-  ));
 
-  const renderCharacters = characters.map((character) => (
-    <CharacterCard key={character.id} character={character} onHandleClick={handleClick} />
+  const renderFavorites =
+    state.favorites &&
+    state.favorites.map(({ id, name }) => <li key={id}>{name}</li>);
+
+  const renderCharacters = memoFilterdCharacters.map((character) => (
+    <CharacterCard
+      key={character.id}
+      character={character}
+      onHandleClick={handleClick}
+    />
   ));
 
   useEffect(() => {
@@ -54,12 +75,17 @@ const Characters = () => {
     fetchCharacters();
   }, []);
   return (
-    <div className="characters">
-      <ul>
-      {renderFavorites}
-      </ul>
-      <div className="characters-container">{renderCharacters}</div>
-    </div>
+    <Fragment>
+      <Search
+        value={search}
+        handleSearch={handleSearch}
+        placeholder="Search 🔍"
+      />
+      <div className="characters">
+        <ul>{renderFavorites}</ul>
+        <div className="characters-container">{renderCharacters}</div>
+      </div>
+    </Fragment>
   );
 };
 
