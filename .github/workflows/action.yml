@@ -1,0 +1,60 @@
+name: Node.js CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: 
+      name: staging
+    strategy:
+      matrix:
+        node-version: [15.x]
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Set up Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Generate build number
+      run: echo "The build number $GITHUB_RUN_NUMBER 🏗"
+    - name: Install dependencies
+      run: npm install
+    - name: Public URL
+      run: export PUBLIC_URL=https://zearkiatos.github.io/react-hooks-web/
+    - name: Create .env
+      run: |
+        touch .env &&
+        echo "REACT_APP_ENVIRONMENT=${REACT_APP_ENVIRONMENT}" > .env
+        echo "REACT_APP_RICKANDMORTY_API_BASE_URL=${REACT_APP_RICKANDMORTY_API_BASE_URL}" > .env
+      env:
+        REACT_APP_ENVIRONMENT: ${{ secrets.REACT_APP_ENVIRONMENT }}
+        REACT_APP_RICKANDMORTY_API_BASE_URL: ${{ secrets.REACT_APP_RICKANDMORTY_API_BASE_URL }}
+    - name: Build docker 🐳
+      run: docker build . -t=react-hooks-web:ghb-$GITHUB_RUN_NUMBER
+    - name: Build
+      run: npm run build:ci
+    - name: Upload production-ready build files
+      uses: actions/upload-artifact@v2
+      with:
+        name: production-files
+        path: ./build
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Download artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: production-files
+        path: ./build
+
+    - name: Deploy to gh-pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./build

@@ -1,0 +1,8 @@
+.characters-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 300px);
+    place-content: center;
+    gap: 26px;
+    width: 100%;
+    margin-top: 5vh;
+}

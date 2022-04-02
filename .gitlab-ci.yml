@@ -1,0 +1,80 @@
+image: node:15-alpine
+stages:
+  - install
+  - docker
+  - build
+  - deploy
+
+install-dependencies:
+  stage: install
+  script:
+    - apk update && apk add python make g++
+    - apk add --update nodejs npm
+    - npm install --silent
+    - npm install react-scripts -g --silent
+    - npm install nodemon -g --silent
+  artifacts:
+    expire_in: 1hr
+    paths:
+      - node_modules/
+  cache:
+    paths:
+      - node_modules/
+
+build-docker:
+  image: docker:latest
+  variables:
+    DOCKER_DRIVER: overlay
+    CRYPTOGRAPHY_DONT_BUILD_RUST: 1
+  services:
+  - docker:dind
+  stage: docker
+  environment: staging
+  cache:
+    paths:
+      - node_modules/
+  dependencies:
+    - install-dependencies
+  script:
+    - echo "Build docker 🐳"
+    - docker build . -t=react-hooks-web:glb-${CI_PIPELINE_IID}
+  artifacts:
+    expire_in: 1hr
+    paths:
+      - build
+
+build-app:
+  stage: build
+  environment: staging
+  cache:
+    paths:
+      - node_modules/
+  dependencies:
+    - install-dependencies
+    - build-docker
+  script:
+    - echo "Deploy a review app 🛠"
+    - touch .env
+    - echo "REACT_APP_ENVIRONMENT=${REACT_APP_ENVIRONMENT}" > .env
+    - echo "REACT_APP_RICKANDMORTY_API_BASE_URL=${REACT_APP_RICKANDMORTY_API_BASE_URL}" >> .env
+    - npm run build:ci
+  artifacts:
+    expire_in: 1hr
+    paths:
+      - build
+
+pages:
+  stage: deploy
+  environment: staging
+  dependencies:
+    - build-app
+  script:
+    - echo "Deploy a review app 🚀"
+    - rm -rf public
+    - cp build/index.html build/404.html
+    - mv build public
+  artifacts:
+    paths:
+      - public
+  only:
+    - branches
