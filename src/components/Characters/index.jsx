@@ -1,7 +1,6 @@
 import React, {
   Fragment,
   useState,
-  useEffect,
   useReducer,
   useMemo,
   useRef,
@@ -11,6 +10,7 @@ import config from "../../config";
 import CharacterCard from "../CharacterCard";
 import Search from "../Search";
 import { FAVORITE_TYPES } from "../../types";
+import useCharacters from '../../hooks/useCharacters';
 import "./characters.css";
 
 const INITIAL_STATE = {
@@ -29,7 +29,6 @@ const favoriteReducer = (state, action) => {
 };
 
 const Characters = () => {
-  const [characters, setCharacters] = useState([]);
   const [state, dispatch] = useReducer(favoriteReducer, INITIAL_STATE);
   const [search, setSearch] = useState("");
   const searchInput = useRef(null);
@@ -39,6 +38,8 @@ const Characters = () => {
       payload: favorite
     });
   };
+
+  const characters = useCharacters(`${config.RICKANDMORTY_API_BASE_URL}/character/`);
 
   const handleSearch = () => setSearch(searchInput.current.value);
 
@@ -52,13 +53,6 @@ const Characters = () => {
     () => filteredCharacters,
     [characters, search]
   );
-  const getCharacters = async () => {
-    const response = await fetch(
-      `${config.RICKANDMORTY_API_BASE_URL}/character/`
-    );
-    const data = response.json();
-    return data;
-  };
 
   const renderFavorites =
     state.favorites &&
@@ -72,13 +66,6 @@ const Characters = () => {
     />
   ));
 
-  useEffect(() => {
-    const fetchCharacters = async () => {
-      const data = await getCharacters();
-      setCharacters(data.results);
-    };
-    fetchCharacters();
-  }, []);
   return (
     <Fragment>
       <Search
