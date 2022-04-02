@@ -17,6 +17,8 @@ Gitlab 🦊: [https://caprilespe.gitlab.io/react-hooks-web/](https://caprilespe.
 
 Vercel: [https://react-hooks-web.vercel.app/](https://react-hooks-web.vercel.app/)
 
+Firebase 🔥: [https://react-hooks-web.firebaseapp.com/](https://react-hooks-web.firebaseapp.com/)
+
 
 
 # Getting Started with Create React App

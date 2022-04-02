@@ -23,7 +23,7 @@
     "dev": "npm run start:watch",
     "build:ci": "CI=false npm run build",
     "firebase:deploy": "firebase deploy",
-    "prefirebase:deploy": "npm run build"
+    "prefirebase:deploy": "npm run build:ci"
   },
   "eslintConfig": {
     "extends": [

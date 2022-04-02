@@ -4,7 +4,8 @@ import React, {
   useEffect,
   useReducer,
   useMemo,
-  useRef
+  useRef,
+  useCallback
 } from "react";
 import config from "../../config";
 import CharacterCard from "../CharacterCard";
@@ -40,6 +41,8 @@ const Characters = () => {
   };
 
   const handleSearch = () => setSearch(searchInput.current.value);
+
+  const handleSearchCallback = useCallback(handleSearch, []);
 
   const filteredCharacters = characters.filter((character) => {
     return character.name.toLowerCase().includes(search.toLowerCase());
@@ -80,7 +83,7 @@ const Characters = () => {
     <Fragment>
       <Search
         value={search}
-        handleSearch={handleSearch}
+        handleSearch={handleSearchCallback}
         placeholder="Search 🔍"
         searchInput={searchInput}
       />
