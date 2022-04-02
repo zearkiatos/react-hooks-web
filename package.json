@@ -21,7 +21,9 @@
     "eject": "react-scripts eject",
     "start:watch": "nodemon start",
     "dev": "npm run start:watch",
-    "build:ci": "CI=false npm run build"
+    "build:ci": "CI=false npm run build",
+    "firebase:deploy": "firebase deploy",
+    "prefirebase:deploy": "npm run build"
   },
   "eslintConfig": {
     "extends": [
@@ -42,6 +44,7 @@
     ]
   },
   "devDependencies": {
+    "firebase": "^9.6.10",
     "nodemon": "^2.0.15"
   }
 }

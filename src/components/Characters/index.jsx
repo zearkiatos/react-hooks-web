@@ -3,7 +3,8 @@ import React, {
   useState,
   useEffect,
   useReducer,
-  useMemo
+  useMemo,
+  useRef
 } from "react";
 import config from "../../config";
 import CharacterCard from "../CharacterCard";
@@ -30,6 +31,7 @@ const Characters = () => {
   const [characters, setCharacters] = useState([]);
   const [state, dispatch] = useReducer(favoriteReducer, INITIAL_STATE);
   const [search, setSearch] = useState("");
+  const searchInput = useRef(null);
   const handleClick = (favorite) => {
     dispatch({
       type: FAVORITE_TYPES.ADD_TO_FAVORITE,
@@ -37,7 +39,7 @@ const Characters = () => {
     });
   };
 
-  const handleSearch = ({ target: { value } }) => setSearch(value);
+  const handleSearch = () => setSearch(searchInput.current.value);
 
   const filteredCharacters = characters.filter((character) => {
     return character.name.toLowerCase().includes(search.toLowerCase());
@@ -80,6 +82,7 @@ const Characters = () => {
         value={search}
         handleSearch={handleSearch}
         placeholder="Search 🔍"
+        searchInput={searchInput}
       />
       <div className="characters">
         <ul>{renderFavorites}</ul>
